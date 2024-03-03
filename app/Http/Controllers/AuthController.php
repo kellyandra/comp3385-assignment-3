@@ -19,11 +19,11 @@ public function create(Request $request)
 
 public function store(Request $request)
 {
-    $validated= $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
+    $credentials= $request->validate([
+        'email' => ['required','email'],
+        'password' => ['required'],
     ]);
-   if(Auth::attempt($validated)){
+   if(Auth::attempt($credentials)){
     return redirect('/dashboard')->with('success','Login Successful');
 } else{
     return back()->withErrors(['email'=> 'Invalid credentials. Check the email address and password entered']);
