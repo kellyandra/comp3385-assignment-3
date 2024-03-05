@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Client;
+use Illuminate\Support\Facades\Storage;
+
 
 class ClientController extends Controller
 {
@@ -16,26 +18,32 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Assuming the field name is 'logo'
-            // Add other validation rules for other fields if needed
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'required|regex:/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/',
+            'address' => 'required|string|max:255',
+            'company_logo' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Image must be less than 2MB
         ]);
 
+        $fileName = null; // Initialize $fileName to handle cases where no file is uploaded
+        
         // Upload the file
-        if ($request->hasFile('logo')) {
-            $image = $request->file('logo');
+        if ($request->hasFile('company_logo')) {
+            $image = $request->file('company_logo');
             $fileName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/logos', $fileName); // Store the uploaded file in storage/app/public/logos directory
+            $image->storeAs('public/logos', $fileName); // Store the uploaded file
+            $filePath  = 'logos/' . $fileName;
+
         }
 
         // Save client data to the database
         $client = new Client();
         $client->name = $request->name;
-        // Set other fields as needed
-        $client->logo = $fileName; // Save the file name to the 'logo' field
+        if ($filePath) {
+            $client->logo = $filePath; // Save the file name to the 'logo' field
+        }
         $client->save();
 
-        return redirect('/dashboard')->with('success', 'Client added successfully');
+        return redirect()->route('dashboard')->with('success', 'Client added successfully');
     }
 }
-

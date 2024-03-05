@@ -32,5 +32,5 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/login', [AuthController::class,'create'])->name('login');
 Route::post('/login', [AuthController::class,'store'])->name('login.store');
 
-Route::get('/clients/add', [ClientController::class,'create'])->name('clients.create');
-Route::post('/clients', [ClientController::class,'store'])->name('clients.store');
+Route::get('/clients/add', [ClientController::class,'create'])->name('clients.create')->middleware('auth');
+Route::post('/clients', [ClientController::class,'store'])->name('clients.store')->middleware('auth');
