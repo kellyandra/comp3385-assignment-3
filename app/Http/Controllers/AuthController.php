@@ -34,4 +34,14 @@ public function store(Request $request)
         return back()->withErrors(['email' => 'Invalid credentials. Check the email address and password entered'])->onlyInput('email');
     }
 }
+
+public function logout(Request $request)
+{
+    Auth::logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/')->with('success', 'You have been logged out.');
+}
 }
