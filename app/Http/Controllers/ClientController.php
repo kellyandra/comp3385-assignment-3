@@ -20,7 +20,7 @@ class ClientController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
-            'phone' => 'required|regex:/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/',
+            'telephone' => 'required|regex:/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/',
             'address' => 'required|string|max:255',
             'company_logo' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Image must be less than 2MB
         ]);
@@ -39,8 +39,12 @@ class ClientController extends Controller
         // Save client data to the database
         $client = new Client();
         $client->name = $request->name;
+        $client->email = $request->email;
+        $client->telephone = $request->telephone;
+        $client->address = $request->address;
+        
         if ($filePath) {
-            $client->logo = $filePath; // Save the file name to the 'logo' field
+            $client->company_logo = $filePath; // Save the file name to the 'logo' field
         }
         $client->save();
 

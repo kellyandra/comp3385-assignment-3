@@ -29,9 +29,9 @@
             </div>
 
             <div class="mb-3">
-                <label for="phone" class="form-label">Phone</label>
+                <label for="telephone" class="form-label">Phone</label>
                 <small class="text-danger">*</small>
-                <input type="text" class="form-control" id="phone" name="phone" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                <input type="text" class="form-control" id="telephone" name="telephone" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
                 <small class="form-text text-muted">Format: xxx-xxx-xxxx</small>
             </div>
 
@@ -42,14 +42,41 @@
             </div>
 
             <div class="mb-3">
-                <label for="company_logo" class="form-label">Company Logo</label>
+                <label for="company_logo" class="form-label">Company Logo </label>
                 <small class="text-danger">*</small>
-                <input type="file" class="form-control-file" id="company_logo" name="company_logo" required>
-                <small class="form-text text-muted">Only image files(e.g. jpg, png) are allowed and files must be less than 2MB. </small>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="company_logo" name="company_logo" required>
+                    <label class="custom-file-label" for="company_logo"></label>
+                </div>
+                <small class="form-text text-muted">Only image files (e.g. jpg, png) are allowed and files must be less than 2MB.</small>
             </div>
+
 
 
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
     </div>
+    <style>
+.custom-file-input {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    height: 32px; /* Match the height of form inputs in Bootstrap */
+    width: 1092px;
+}
+
+.custom-file-label {
+    height: 35px; /* Match the height of form inputs in Bootstrap */
+    overflow: hidden;
+    white-space: nowrap; /* Prevent text from wrapping */
+    text-overflow: ellipsis; /* Add an ellipsis if the text is too long */
+}
+
+.input-group .custom-file {
+    flex: 1; /* Ensure the custom file input expands to fill the space */
+}
+.custom-file{
+    height: 35px;
+}
+</style>
+
 @endsection
